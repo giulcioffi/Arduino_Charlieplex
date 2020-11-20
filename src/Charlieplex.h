@@ -1,21 +1,14 @@
-/*
-||
-|| @author Alexander Brevig
-|| @version 1.0
-||
-*/
-
 #ifndef CHARLIEPLEX_H
 #define CHARLIEPLEX_H
 
-#include <WProgram.h>
+#include <Arduino.h>
 
-struct CharliePin {
-	byte vcc;
-	byte gnd;
+struct charliePin {
+	uint8_t vcc;
+	uint8_t gnd;
 };
 
-typedef CharliePin charliePin;
+//typedef CharliePin charliePin;
 
 class Charlieplex {
 
@@ -23,18 +16,23 @@ class Charlieplex {
 #define NUMBER_OF_STATUSES ((_numberOfPins*_numberOfPins)-_numberOfPins)
 
 public:
-	Charlieplex(byte* userPins,byte numberOfUserPins);
+	Charlieplex(uint8_t* userPins, uint8_t numberOfUserPins);
+
+	void mapPins();
+
+	void turnOn(uint8_t led);
+	void turnOff(uint8_t led);
 	
-	void charlieWrite(charliePin pin,bool state);
-	
-	void setVcc(byte pin);
-	void setGnd(byte pin);
+	void setVcc(uint8_t pin);
+	void setGnd(uint8_t pin);
+	void clearVcc(uint8_t pin);
 	
 	void clear();
 	
 private:
-	byte numberOfPins;
-	byte* pins;
+	uint8_t numberOfPins;
+	uint8_t* pins;
+	charliePin leds[380];
 };
 
 #endif
