@@ -1,10 +1,14 @@
 #include "Charlieplex.h"
 
-Charlieplex::Charlieplex(uint8_t* userPins, uint8_t numberOfUserPins){
+Charlieplex::Charlieplex(uint8_t* userPins, uint8_t numberOfUserPins):
+	led_th(osPriorityNormal, 2048, NULL, "led_thread")
+	{
 	pins = userPins;
 	numberOfPins = numberOfUserPins;
+	numberOfLEDs = (numberOfUserPins*numberOfUserPins)-numberOfUserPins;
 	clear();
 	mapPins();
+	led_th.start(mbed::callback(this, &Charlieplex::roundAmongLed));
 }
 
 void Charlieplex::mapPins(){
@@ -19,13 +23,29 @@ void Charlieplex::mapPins(){
 	}
 }
 
+void Charlieplex::roundAmongLed(){
+	while (1) {
+		int numOn = 0;
+		for(int k=0; k<numberOfLEDs;k++){
+			if(ledON[k]){
+				numOn = numOn + 1;
+				clear();
+				setVcc(leds[k].vcc);
+				setGnd(leds[k].gnd);
+			}
+			if (!numOn) {
+				clear();
+			}
+		}
+	}
+}
+
 void Charlieplex::turnOn(uint8_t led){
-	setVcc(leds[led-1].vcc);
-	setGnd(leds[led-1].gnd);
+	ledON[led-1]=1;
 }
 
 void Charlieplex::turnOff(uint8_t led){
-	clearVcc(leds[led-1].vcc);
+	ledON[led-1]=0;
 }
 
 //set a pin HIGH 

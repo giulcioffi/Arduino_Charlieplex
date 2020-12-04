@@ -15,22 +15,30 @@ void setup(){
 }
 
 void loop(){
+
   charlieplex.turnOn(1);
   delay(2000);
-  charlieplex.clear();
   charlieplex.turnOn(2);
   delay(2000);
-  charlieplex.clear();
   charlieplex.turnOn(3);
   delay(2000);
-  charlieplex.clear();
   charlieplex.turnOn(4);
   delay(2000);
-  charlieplex.clear();
   charlieplex.turnOn(5);
   delay(2000);
-  charlieplex.clear();
   charlieplex.turnOn(6);
   delay(2000);
-  charlieplex.clear();
+  charlieplex.turnOff(6);
+  delay(2000);
+  charlieplex.turnOff(5);
+  delay(2000);
+  charlieplex.turnOff(4);
+  delay(2000);
+  charlieplex.turnOff(3);
+  delay(2000);
+  charlieplex.turnOff(2);
+  delay(2000);
+  charlieplex.turnOff(1);
+  delay(5000);
+
 }

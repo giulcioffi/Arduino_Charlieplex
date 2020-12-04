@@ -2,6 +2,7 @@
 #define CHARLIEPLEX_H
 
 #include <Arduino.h>
+#include "rtos.h"
 
 struct charliePin {
 	uint8_t vcc;
@@ -31,8 +32,12 @@ public:
 	
 private:
 	uint8_t numberOfPins;
+	uint8_t numberOfLEDs;
 	uint8_t* pins;
 	charliePin leds[380];
+	uint8_t ledON[380] = { 0 };
+    rtos::Thread led_th;
+	void roundAmongLed();
 };
 
 #endif
